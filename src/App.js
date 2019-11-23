@@ -1,14 +1,18 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
 
+import css from './App.module.scss'
 import Routes from './routes';
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes />
-      </BrowserRouter>
+      <Container className={css.container} maxWidth="md">
+        <BrowserRouter>
+          <Routes />
+        </BrowserRouter>
+      </Container>
     </div>
   );
 }
