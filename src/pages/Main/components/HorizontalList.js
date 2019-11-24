@@ -18,33 +18,11 @@ class HorizontalList extends PureComponent {
     const settings = {
       dots: false,
       infinite: true,
-      slidesToShow: 4,
-      slidesToScroll: 3,
+      slidesToShow: 1,
+      slidesToScroll: 1,
       centerMode: true,
-      centerPadding: '10px',
-      responsive: [
-        {
-          breakpoint: 1024,
-          settings: {
-            slidesToShow: 3,
-            slidesToScroll: 2,
-          },
-        },
-        {
-          breakpoint: 700,
-          settings: {
-            slidesToShow: 2,
-            slidesToScroll: 1,
-          },
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-          },
-        },
-      ],
+      centerPadding: '20px',
+      variableWidth: true,
     };
     return (
       <div>
@@ -57,9 +35,11 @@ class HorizontalList extends PureComponent {
               Texto de descrição
             </Typography>
           </div>
-          <Link to="/list">
-            <Button variant="contained" className={css.show_all}>Ver todos</Button>
-          </Link>
+
+          <Button variant="contained" className={css.show_all}>
+            <Link to="/list" style={{ textDecoration: 'none', color: 'initial' }}>Ver todos</Link>
+          </Button>
+
         </div>
         <Slider {...settings} className={css.slider}>
           <Item />

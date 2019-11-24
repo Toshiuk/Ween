@@ -17,7 +17,7 @@ import css from './Item.module.scss';
 class Item extends PureComponent {
   render() {
     return (
-      <Box maxWidth={1 / 4} minWidth={200} m={2}>
+      <Box maxWidth={272} minWidth={272} m={1}>
         <Card className={css.item}>
           <Fab aria-label="like" className={css.like} size="small">
             <FavoriteIcon />

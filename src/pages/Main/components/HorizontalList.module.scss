@@ -1,5 +1,6 @@
 .slider {
   margin: 15px;
+  margin-top: 0px;
 }
 
 .show_all{
@@ -11,7 +12,9 @@
 }
 
 .info{
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  margin: 10px 0px;
+  margin-top: 10px ;
 }

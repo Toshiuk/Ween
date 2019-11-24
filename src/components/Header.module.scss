@@ -6,10 +6,12 @@
   display: flex;
 }
 
-.toolbar{
+.toolbar.toolbar.toolbar{
   display: flex;
   min-height: 100px;
   justify-content: space-between;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .checkboxItem.checkboxItem.checkboxItem {

@@ -15,8 +15,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import uniq from 'lodash/uniq';
+import Divider from '@material-ui/core/Divider';
+import isEmpty from 'lodash/isEmpty';
 
 import css from './Header.module.scss';
+import logo from '../imgs/grupo.png';
 
 class Header extends Component {
   constructor(props) {
@@ -38,6 +41,8 @@ class Header extends Component {
       filters,
       handleClick,
     } = this.props;
+
+    const filtersSelected = filters.filter((filter) => filter.value);
     return (
       <>
         <Dialog
@@ -46,16 +51,16 @@ class Header extends Component {
           fullWidth
           open={openFilter}
         >
-          <DialogTitle id="simple-dialog-title">Filtro</DialogTitle>
+          <DialogTitle>Filtro</DialogTitle>
           <>
-            { uniq(filters.map((filter) => filter.category)).map((category) => (
+            { !isEmpty(filters) && uniq(filters.map((filter) => filter.type)).map((type) => (
               <>
                 <Typography align="center" variant="h6">
-                  { category }
+                  { type }
                 </Typography>
                 <FormControl className={css.checkboxItem}>
                   { filters
-                    .filter((filter) => filter.category === category)
+                    .filter((filter) => filter.type === type)
                     .map((filter) => (
                       <Fab
                         name={filter.name}
@@ -81,9 +86,7 @@ class Header extends Component {
 
         <Toolbar className={css.toolbar}>
           <Link to="/" style={{ textDecoration: 'none' }}>
-            <Typography variant="h6" noWrap>
-            Ween
-            </Typography>
+            <img src={logo} alt="Logo Escola Ideal" />
           </Link>
           <div className={css.actionButtons}>
             <Input
@@ -91,13 +94,18 @@ class Header extends Component {
               placeholder="Buscar pelo endereço..."
               type="search"
             />
-            { filters.filter((filter) => filter.value).map((filter) => (
+            { filtersSelected.slice(0, 3).map((filter) => (
               <Chip
-                name="teste"
                 label={filter.name}
                 onDelete={() => handleClick(filter.name)}
               />
             ))}
+            { filtersSelected.length > 3 && (
+              <Chip
+                label={`e mais ${filtersSelected.length - 3} filtro(s)`}
+                onClick={this.toggleDialogFilter}
+              />
+            )}
             <IconButton onClick={this.toggleDialogFilter} aria-label="filtrar pesquisa">
               <FilterListIcon />
             </IconButton>
@@ -106,6 +114,7 @@ class Header extends Component {
             </IconButton>
           </div>
         </Toolbar>
+        <Divider light />
       </>
     );
   }
