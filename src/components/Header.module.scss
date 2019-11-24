@@ -15,7 +15,7 @@
 .checkboxItem.checkboxItem.checkboxItem {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
 }
 
@@ -25,4 +25,9 @@
 
 .checkbox > span {
   pointer-events: none;
+}
+
+.filter.filter.filter {
+  margin: 0px 10px;
+  border-radius: 20px;
 }

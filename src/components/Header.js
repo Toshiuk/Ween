@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -11,7 +12,9 @@ import Dialog from '@material-ui/core/Dialog';
 import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import FormControl from '@material-ui/core/FormControl';
+import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
+import uniq from 'lodash/uniq';
 
 import css from './Header.module.scss';
 
@@ -20,25 +23,21 @@ class Header extends Component {
     super(props);
     this.state = {
       openFilter: false,
-      one: false,
-      two: false,
-      three: false,
-      four: false,
     };
   }
 
   toggleDialogFilter = () => this.setState((prevState) => ({ openFilter: !prevState.openFilter }));
 
-  handleClick = (e) => {
-    const { state } = this;
-    state[e.target.name] = !state[e.target.name];
-    this.setState(state);
-  }
 
   render() {
     const {
-      openFilter, one, two, three, four,
+      openFilter,
     } = this.state;
+
+    const {
+      filters,
+      handleClick,
+    } = this.props;
     return (
       <>
         <Dialog
@@ -48,51 +47,31 @@ class Header extends Component {
           open={openFilter}
         >
           <DialogTitle id="simple-dialog-title">Filtro</DialogTitle>
-          <Typography align="center" variant="h6">
-            Idade
-          </Typography>
-          <FormControl className={css.checkboxItem}>
-            <Fab
-              name="one"
-              variant="extended"
-              color={one ? 'primary' : 'default'}
-              aria-label="add"
-              onClick={this.handleClick}
-              className={css.checkbox}
-            >
-              One
-            </Fab>
-            <Fab
-              name="two"
-              variant="extended"
-              color={two ? 'primary' : 'default'}
-              aria-label="add"
-              onClick={this.handleClick}
-              className={css.checkbox}
-            >
-              Two
-            </Fab>
-            <Fab
-              name="three"
-              variant="extended"
-              color={three ? 'primary' : 'default'}
-              aria-label="add"
-              onClick={this.handleClick}
-              className={css.checkbox}
-            >
-              Three
-            </Fab>
-            <Fab
-              name="four"
-              variant="extended"
-              color={four ? 'primary' : 'default'}
-              aria-label="add"
-              onClick={this.handleClick}
-              className={css.checkbox}
-            >
-              Four
-            </Fab>
-          </FormControl>
+          <>
+            { uniq(filters.map((filter) => filter.category)).map((category) => (
+              <>
+                <Typography align="center" variant="h6">
+                  { category }
+                </Typography>
+                <FormControl className={css.checkboxItem}>
+                  { filters
+                    .filter((filter) => filter.category === category)
+                    .map((filter) => (
+                      <Fab
+                        name={filter.name}
+                        variant="extended"
+                        color={filter.value ? 'primary' : 'default'}
+                        aria-label="add"
+                        onClick={() => handleClick(filter.name)}
+                        className={css.checkbox}
+                      >
+                        {filter.name}
+                      </Fab>
+                    ))}
+                </FormControl>
+              </>
+            ))}
+          </>
           <DialogActions>
             <Button onClick={this.toggleDialogFilter} color="primary">
             Fechar e continuar
@@ -112,6 +91,13 @@ class Header extends Component {
               placeholder="Buscar pelo endereço..."
               type="search"
             />
+            { filters.filter((filter) => filter.value).map((filter) => (
+              <Chip
+                name="teste"
+                label={filter.name}
+                onDelete={() => handleClick(filter.name)}
+              />
+            ))}
             <IconButton onClick={this.toggleDialogFilter} aria-label="filtrar pesquisa">
               <FilterListIcon />
             </IconButton>

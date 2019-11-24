@@ -8,6 +8,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Rating from '@material-ui/lab/Rating';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
+import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
@@ -40,6 +41,11 @@ class Item extends PureComponent {
                   Vagas abertas
                 </Typography>
                 <Typography gutterBottom variant="h5" component="h2">
+                  <Chip
+                    label="Pública"
+                    color="primary"
+                    size="small"
+                  />
                   Escola A B
                 </Typography>
 
