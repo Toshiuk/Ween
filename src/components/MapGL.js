@@ -79,28 +79,6 @@ class MapGL extends Component {
     } = this.state;
 
     const { addresses } = this.props;
-    const schoolsLocation = [
-      {
-        id: 1,
-        latitude: -30.085414,
-        longitude: -51.208232,
-      },
-      {
-        id: 2,
-        latitude: -30.087601,
-        longitude: -51.210038,
-      },
-      {
-        id: 3,
-        latitude: -30.084478,
-        longitude: -51.218357,
-      },
-      {
-        id: 4,
-        latitude: -30.0277,
-        longitude: -51.2287,
-      },
-    ];
 
     return (
       <ReactMapGL

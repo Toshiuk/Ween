@@ -15,7 +15,6 @@ import FormControl from '@material-ui/core/FormControl';
 import Chip from '@material-ui/core/Chip';
 import Fab from '@material-ui/core/Fab';
 import uniq from 'lodash/uniq';
-import Divider from '@material-ui/core/Divider';
 import isEmpty from 'lodash/isEmpty';
 
 import css from './Header.module.scss';
@@ -40,6 +39,9 @@ class Header extends Component {
     const {
       filters,
       handleClick,
+      onChangeAddress,
+      address,
+      submitAddress,
     } = this.props;
 
     const filtersSelected = filters.filter((filter) => filter.value);
@@ -90,6 +92,8 @@ class Header extends Component {
           </Link>
           <div className={css.actionButtons}>
             <Input
+              value={address}
+              onChange={onChangeAddress}
               className={css.search}
               placeholder="Buscar pelo endereço..."
               type="search"
@@ -109,12 +113,12 @@ class Header extends Component {
             <IconButton onClick={this.toggleDialogFilter} aria-label="filtrar pesquisa">
               <FilterListIcon />
             </IconButton>
-            <IconButton color="primary" aria-label="enviar pesquisa">
+            <IconButton onClick={submitAddress} color="primary" aria-label="enviar pesquisa">
               <SendIcon />
             </IconButton>
           </div>
         </Toolbar>
-        <Divider light />
+        <hr className={css.hr} />
       </>
     );
   }

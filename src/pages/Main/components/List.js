@@ -25,7 +25,11 @@ class List extends Component {
 
   render() {
     const { showMap } = this.state;
-    const { schools } = this.props;
+    const { addressType } = this.props;
+    let { schools } = this.props;
+    schools = addressType
+      ? schools.filter((school) => school.category_id === addressType)
+      : schools;
     return (
       <>
         <Hidden mdDown>
@@ -46,7 +50,9 @@ class List extends Component {
               Resultado
         </Typography>
         <Typography variant="subtitle1" component="h4">
-              4 Escolas
+          { schools.length }
+          {' '}
+          Escolas
         </Typography>
         <Box
           display="flex"
@@ -70,7 +76,7 @@ class List extends Component {
             { showMap
           && (
           <div className={css.map}>
-            <MapGL addresses={ schools } />
+            <MapGL addresses={schools} />
           </div>
           )}
           </Hidden>

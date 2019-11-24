@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/jsx-props-no-spreading */
 
 import React, { PureComponent } from 'react';
@@ -24,28 +25,27 @@ class HorizontalList extends PureComponent {
       centerPadding: '20px',
       variableWidth: true,
     };
+    const { schools, allowCategory, onChangeAddressType } = this.props;
+    const schoolType = allowCategory === 1 ? 'públicas' : 'particulares';
     return (
       <div>
         <div className={css.info}>
           <div className={css.title}>
             <Typography variant="h4" component="h3">
-              Escolas particulares
+              {`Escolas ${schoolType}`}
             </Typography>
             <Typography variant="subtitle1" component="h4">
               Texto de descrição
             </Typography>
           </div>
 
-          <Button variant="contained" className={css.show_all}>
-            <Link to="/list" style={{ textDecoration: 'none', color: 'initial' }}>Ver todos</Link>
+          <Button onClick={() => onChangeAddressType(allowCategory)} variant="contained" className={css.show_all}>
+            <Link to="/list" style={{ textDecoration: 'none', color: 'initial' }}>{`Ver todas as escolas ${schoolType}`}</Link>
           </Button>
 
         </div>
         <Slider {...settings} className={css.slider}>
-          <Item />
-          <Item />
-          <Item />
-          <Item />
+          { schools.filter((school) => school.category_id === allowCategory).map((school) => <Item key={school.id} school={school} />)}
         </Slider>
       </div>
     );

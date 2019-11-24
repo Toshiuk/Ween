@@ -20,10 +20,9 @@ class Item extends PureComponent {
   render() {
     const {
       school: {
-        id, address, name, category_id,
+        id, address, name, category_id, distance,
       },
     } = this.props;
-    console.log(this.props);
     return (
       <Box key={id} maxWidth={272} minWidth={272} m={1}>
         <Card className={css.item}>
@@ -42,9 +41,12 @@ class Item extends PureComponent {
             <CardContent>
               <Rating name="read-only" value={3} readOnly className={css.stars} size="small" />
               <div className={css.description}>
+                { !!distance
+                && (
                 <Typography variant="body2" className={css.distance} component="h6">
-                  Distância
+                  { `${distance} Km` }
                 </Typography>
+                )}
                 <Typography variant="caption" color="textSecondary" component="p">
                   Vagas abertas
                 </Typography>

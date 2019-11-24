@@ -1,14 +1,16 @@
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-access-state-in-setstate */
 import React, { Component } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import isEmpty from 'lodash/isEmpty';
 
 import css from './App.module.scss';
 import Routes from './routes';
 import Header from './components/Header';
+import HeaderHome from './components/HeaderHome';
 import api from './services/api';
 
 const theme = createMuiTheme({
@@ -27,16 +29,29 @@ class App extends Component {
     this.state = {
       filters: [],
       schools: [],
+      addressType: null,
+      address: '',
     };
   }
 
   componentDidMount() {
-    api
-      .get('/schools?limit=10')
-      .then((response) => {
-        this.setState({ schools: response.data });
-      })
-      .catch((err) => console.log(err.msg));
+    navigator.geolocation.getCurrentPosition((position) => {
+      api
+        .get(`/geo-lat?latitude=${position.coords.latitude}&longitude=${position.coords.longitude}&limit=30`)
+        .then((response) => {
+          this.setState({ schools: response.data });
+        })
+        .catch((err) => console.log(err.msg));
+    });
+
+    if (isEmpty(this.state.schools)) {
+      api
+        .get('/schools?limit=40')
+        .then((response) => {
+          this.setState({ schools: response.data });
+        })
+        .catch((err) => console.log(err.msg));
+    }
 
     api
       .get('/school-types')
@@ -118,15 +133,53 @@ class App extends Component {
     this.setState({ filters });
   }
 
+  onChangeAddress = (e) => {
+    this.setState({ address: e.target.value });
+  }
+
+  onChangeAddressType = (type) => {
+    this.setState({ addressType: type });
+  }
+
+  submitAddress= () => {
+    const { address } = this.state;
+    api
+      .get(`/geo-address?address=${address}&limit=30`)
+      .then((response) => {
+        this.setState({ schools: response.data });
+      })
+      .catch((err) => console.log(err.msg));
+  }
+
   render() {
-    const { filters, schools } = this.state;
+    const {
+      filters, schools, address, addressType,
+    } = this.state;
     return (
       <div className={css.App}>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
             <Container className={css.container} maxWidth="lg">
-              <Header filters={filters} handleClick={this.handleClick} />
-              <Routes filters={filters} schools={schools} />
+              <Switch>
+                <Route exact path="/">
+                  <HeaderHome filters={filters} />
+                </Route>
+                <Route>
+                  <Header
+                    address={address}
+                    onChangeAddress={this.onChangeAddress}
+                    filters={filters}
+                    handleClick={this.handleClick}
+                    submitAddress={this.submitAddress}
+                  />
+                </Route>
+              </Switch>
+              <Routes
+                filters={filters}
+                onChangeAddressType={this.onChangeAddressType}
+                addressType={addressType}
+                schools={schools}
+              />
             </Container>
           </BrowserRouter>
         </ThemeProvider>

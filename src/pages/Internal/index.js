@@ -1,17 +1,15 @@
 
 import React, { Component } from 'react';
-import './Internal.css';
 
+
+import SchoolBanner from './components/SchoolBanner';
 
 class Internal extends Component {
-
-    render() {
-        return (
-            <section id="internal">
-              Internal
-            </section>
-        );
-    }
+  render() {
+    return (
+      <SchoolBanner />
+    );
+  }
 }
 
 export default Internal;
