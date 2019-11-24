@@ -4,18 +4,24 @@ import Box from '@material-ui/core/Box';
 
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
+import Rating from '@material-ui/lab/Rating';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Fab from '@material-ui/core/Fab';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 
+import css from './Item.module.scss';
 
 class Item extends PureComponent {
   render() {
     return (
       <Box maxWidth={1 / 4} minWidth={200} m={2}>
-        <Card>
+        <Card className={css.item}>
+          <Fab aria-label="like" className={css.like} size="small">
+            <FavoriteIcon />
+          </Fab>
+
           <CardActionArea>
             <CardMedia
               component="img"
@@ -25,23 +31,24 @@ class Item extends PureComponent {
               title="Contemplative Reptile"
             />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
-                  Lizard
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                  Lizards are a widespread group of squamate reptiles, with
-                  over 6,000 species, ranging across all continents except Antarctica
-              </Typography>
+              <Rating name="read-only" value={3} readOnly className={css.stars} size="small" />
+              <div className={css.description}>
+                <Typography variant="body2" className={css.distance} component="h6">
+                  Distância
+                </Typography>
+                <Typography variant="caption" color="textSecondary" component="p">
+                  Vagas abertas
+                </Typography>
+                <Typography gutterBottom variant="h5" component="h2">
+                  Escola A B
+                </Typography>
+
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Endereço da escola
+                </Typography>
+              </div>
             </CardContent>
           </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-                Share
-            </Button>
-            <Button size="small" color="primary">
-                Learn More
-            </Button>
-          </CardActions>
         </Card>
       </Box>
     );

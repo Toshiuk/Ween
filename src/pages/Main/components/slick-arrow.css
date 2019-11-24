@@ -1,0 +1,16 @@
+ .slick-next:before {
+  font-size: 65px;
+  opacity: 1;
+  text-shadow: 2px 2px 3px #737373;
+}
+
+ .slick-next {
+  height: 65px;
+  width: 20px;
+  right: 15px;
+}
+
+
+.slick-prev{
+  display: none !important;  
+}

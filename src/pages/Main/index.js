@@ -1,13 +1,14 @@
 
 import React, { PureComponent } from 'react';
 
-import List from './components/List';
+import HorizontalList from './components/HorizontalList';
 
 class Main extends PureComponent {
   render() {
     return (
       <section id="main">
-        <List />
+        <HorizontalList />
+        <HorizontalList />
       </section>
     );
   }

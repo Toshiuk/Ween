@@ -1,0 +1,28 @@
+.search {
+  margin-left: 10px;
+}
+
+.actionSearch{
+  display: flex;
+}
+
+.toolbar{
+  display: flex;
+  min-height: 100px;
+  justify-content: space-between;
+}
+
+.checkboxItem.checkboxItem.checkboxItem {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.checkbox.checkbox.checkbox {
+  margin: 20px;
+}
+
+.checkbox > span {
+  pointer-events: none;
+}

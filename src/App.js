@@ -4,15 +4,18 @@ import Container from '@material-ui/core/Container';
 
 import css from './App.module.scss';
 import Routes from './routes';
+import Header from './components/Header';
+
 
 function App() {
   return (
-    <div className="App">
-      <Container className={css.container} maxWidth="lg">
-        <BrowserRouter>
+    <div className={css.App}>
+      <BrowserRouter>
+        <Header />
+        <Container className={css.container} maxWidth="lg">
           <Routes />
-        </BrowserRouter>
-      </Container>
+        </Container>
+      </BrowserRouter>
     </div>
   );
 }
