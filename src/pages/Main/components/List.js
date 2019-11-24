@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/no-access-state-in-setstate */
 
@@ -24,20 +25,23 @@ class List extends Component {
 
   render() {
     const { showMap } = this.state;
+    const { schools } = this.props;
     return (
       <>
-        <div className={css.switch}>
-          <FormControlLabel
-            control={(
-              <Switch
-                checked={showMap}
-                color="primary"
-                onClick={this.toggleShowMap}
-              />
+        <Hidden mdDown>
+          <div className={css.switch}>
+            <FormControlLabel
+              control={(
+                <Switch
+                  checked={showMap}
+                  color="primary"
+                  onClick={this.toggleShowMap}
+                />
             )}
-            label="Mostrar mapa"
-          />
-        </div>
+              label="Mostrar mapa"
+            />
+          </div>
+        </Hidden>
         <Typography variant="h4" component="h3">
               Resultado
         </Typography>
@@ -59,16 +63,14 @@ class List extends Component {
             className={showMap ? css.halfScreen : css.fullScreen}
             my={2}
           >
-            <Item />
-            <Item />
-            <Item />
-            <Item />
+            { schools.map((school) => <Item key={school.id} school={school} />)}
+
           </Box>
           <Hidden mdDown>
             { showMap
           && (
           <div className={css.map}>
-            <MapGL />
+            <MapGL addresses={ schools } />
           </div>
           )}
           </Hidden>

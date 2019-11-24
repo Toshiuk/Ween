@@ -26,10 +26,18 @@ class App extends Component {
     super(props);
     this.state = {
       filters: [],
+      schools: [],
     };
   }
 
   componentDidMount() {
+    api
+      .get('/schools?limit=10')
+      .then((response) => {
+        this.setState({ schools: response.data });
+      })
+      .catch((err) => console.log(err.msg));
+
     api
       .get('/school-types')
       .then((response) => {
@@ -111,14 +119,14 @@ class App extends Component {
   }
 
   render() {
-    const { filters } = this.state;
+    const { filters, schools } = this.state;
     return (
       <div className={css.App}>
         <ThemeProvider theme={theme}>
           <BrowserRouter>
             <Container className={css.container} maxWidth="lg">
               <Header filters={filters} handleClick={this.handleClick} />
-              <Routes filters={filters} />
+              <Routes filters={filters} schools={schools} />
             </Container>
           </BrowserRouter>
         </ThemeProvider>

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import ReactMapGL, { Marker } from 'react-map-gl';
 import axios from 'axios';
@@ -67,7 +68,7 @@ class MapGL extends Component {
       viewport: {
         ...this.state.viewport,
         height: window.innerHeight,
-        width: '80%',
+        width: '100%',
       },
     });
   };
@@ -76,6 +77,8 @@ class MapGL extends Component {
     const {
       user: { latitude, longitude },
     } = this.state;
+
+    const { addresses } = this.props;
     const schoolsLocation = [
       {
         id: 1,
@@ -116,16 +119,17 @@ class MapGL extends Component {
         >
           <PersonPinIcon />
         </Marker>
-        {schoolsLocation.map((location) => (
-          <Marker
-            className="schoolLocation"
-            key={location.id}
-            latitude={location.latitude}
-            longitude={location.longitude}
-          >
-            <LocationOnIcon />
-          </Marker>
-        ))}
+        {addresses.filter((address) => !!address.id && !!address.latitude && !!address.longitude)
+          .map((location) => (
+            <Marker
+              className="schoolLocation"
+              key={location.id}
+              latitude={location.latitude}
+              longitude={location.longitude}
+            >
+              <LocationOnIcon />
+            </Marker>
+          ))}
       </ReactMapGL>
     );
   }

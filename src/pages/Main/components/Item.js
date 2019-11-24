@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+/* eslint-disable react/prop-types */
 
 import React, { PureComponent } from 'react';
 import Box from '@material-ui/core/Box';
@@ -16,8 +18,14 @@ import css from './Item.module.scss';
 
 class Item extends PureComponent {
   render() {
+    const {
+      school: {
+        id, address, name, category_id,
+      },
+    } = this.props;
+    console.log(this.props);
     return (
-      <Box maxWidth={272} minWidth={272} m={1}>
+      <Box key={id} maxWidth={272} minWidth={272} m={1}>
         <Card className={css.item}>
           <Fab aria-label="like" className={css.like} size="small">
             <FavoriteIcon />
@@ -41,16 +49,27 @@ class Item extends PureComponent {
                   Vagas abertas
                 </Typography>
                 <Typography gutterBottom variant="h5" component="h2">
-                  <Chip
-                    label="Pública"
-                    color="primary"
-                    size="small"
-                  />
-                  Escola A B
+                  { category_id === 1
+                    ? (
+                      <Chip
+                        label="Publica"
+                        color="primary"
+                        size="small"
+                      />
+                    )
+                    : (
+                      <Chip
+                        label="Privada"
+                        color="secondary"
+                        size="small"
+                      />
+                    )}
+                  {' '}
+                  {name}
                 </Typography>
 
                 <Typography variant="body2" color="textSecondary" component="p">
-                  Endereço da escola
+                  {address}
                 </Typography>
               </div>
             </CardContent>
